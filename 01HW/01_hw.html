@@ -8,6 +8,53 @@
 
 <script type="text/javascript">
 	"use strict";
+	// homework #1 - Celcius -> Farenheit
+	var tC;
+	var tF;
+	do {
+		tC = parseInt(prompt("Enter Celcius: "));
+		if (isNaN(tC)) {
+			alert("Enter number, please!!!");
+		}
+		else {
+			break;
+		}
+	} while(true)
+	tF = tC * 9 / 5 + 32;
+	alert("Temperature in Farenheit is: " + tF);
+
+	// homework #2 - work with variables, just playing around
+	var a = prompt("Enter something: ");
+	if (isNaN(a)) {
+		alert("a is NaN!");
+	} else {
+		alert("a is not a NaN");
+	}
+	alert("Type of a is: " + typeof a);
+	alert("And the entered variable is: " + a);
+
+	// homework #3 - admin and name vars
+	var admin, name;
+
+	name = "Василий";
+	admin = name;
+	alert("and admin is: " + name);
+
+	// homework #4 - 1000 + "108"
+	alert(1000 + "108");
+	var a = 1000, b = "108";
+	var c = a + b;
+	alert("c = " + c + ", and typeof c is " + typeof c);
+
+	// homework #5 - async and defer
+	/* <script async src="...">  - страница грузится, и скрипт грузится,
+	при этом если скрипт не загрузился (и соответственно не начал пока исполняться) - это не мешает
+	загрузке страницы. когда скрипт подгрузится - тогда и начнет исполняться */
+	/* <script defer scr="js1.js"> <script defer src="js2.js"> - аналогично async - но даже если скрипт js2 загрузится раньше чем js1,
+	все равно браузер будет ждать пока загрузится js1 и выполнение начнется именно с него (так как именно в таком порядке
+	перечислены скрипты в теле страницы)*/
+	/* если defer и async одновременно используются - то будет исполнен async (кроме IE9- - я так понимаю: младше чем IE9 - только defer,
+	так как он не понимает async вообще) */
 
 </script>	
 </body>
