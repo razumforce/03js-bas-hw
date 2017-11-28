@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Howework02</title>
+</head>
+<body>
+
+<script type="text/javascript">
+	"use strict";
+	// homework #8 - 
+	function power(val, pow) {
+		var result = 0;
+		if (pow > 1) {
+			result = val * power(val, --pow);
+		} else {
+			return val;
+		}
+		return result;
+	}
+
+	var x = 2;
+	var p = 8;
+
+	alert(power(x, p));
+	
+
+</script>		
+</body>
+</html>
