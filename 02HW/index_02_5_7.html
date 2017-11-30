@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Howework02</title>
+</head>
+<body>
+
+<script type="text/javascript">
+	"use strict";
+	// homework #5 - 
+	function add(a, b) {
+		return a + b;
+	}
+
+	function sub(a, b) {
+		return a - b;
+	}
+
+	function mul(a, b) {
+		return a * b;
+	}
+
+	function div(a, b) {
+		return a / b;
+	}
+
+	// homework #6 - 
+	function mathOperation(arg1, arg2, operation) {
+		if (isNaN(arg1) || isNaN(arg2)) {
+			return NaN; // если хотя бы один аргумент неопеределен или число - возврат NaN
+		} else {
+			switch(operation) {
+				case 'add':
+				return add(arg1, arg2);
+				case 'sub':
+				return sub(arg1, arg2);
+				case 'mul':
+				return mul(arg1, arg2);
+				case 'div':
+				return div(arg1, arg2);
+				default:
+				return null; // если операция не существует - то возврат null
+			}
+		}
+	}
+
+	var a = 3;
+	var b = 2;
+
+	alert(mathOperation(a, b, 'sub'));
+
+	// homework #6 - сравнение null и 0
+	if (null == 0) {
+		alert('null is equal to 0!');
+	} else {
+		alert('null is NOT equal to 0!')
+	}
+
+	// null приводится к 0 только в процессе преобразования типа,
+	// например null + 2 это будет как 0 + 2 и будет 2
+	// а сами по себе null и 0 не равны друг другу
+
+</script>		
+</body>
+</html>

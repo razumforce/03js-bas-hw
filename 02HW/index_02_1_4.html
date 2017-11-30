@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Howework02</title>
+</head>
+<body>
+
+<script type="text/javascript">
+	"use strict";
+	// homework #1 - объяснить результаты вычислений
+	var a = 1,  b = 1,  c,  d;
+	c = ++a;
+	alert(c);  // 2 - а сначала увеличили, оно стало 2 и присволили с
+	d = b++;
+	alert(d);  // 1 - б сначала присвоили д, а потом увеличили (то-есть б = 2)
+	c = (2+ ++a);
+	alert(c); // 5 - а сначала увеличили (значит 3), а потом добавили 2, и присвоили с
+	d = (2+ b++);
+	alert(d); // 4 - сначала б=2 добавили 2 и присвоили д (то-есть 4), а потом б увеличили до 3
+	alert(a);  // 3 - логично все
+	alert(b);  // 3 - логично все
+	
+	// homework #2 - х = 5 (сначала выполнили действия в скобках, и потом добавили к 1)
+	var a = 2;
+	var x = 1 + (a *= 2);
+
+	// homework #3 - 
+	var a = -10, b = -15;
+	if (a >= 0 && b >= 0) {
+		alert("result = " + (a - b));
+	} else if (a < 0 && b < 0) {
+		alert("result = " + (a * b));
+	} else {
+		alert("result = " + (a + b));
+	}
+
+	// homework #4 - 
+	var a = 10;
+
+	switch(a) {
+		case 0:
+		alert(a++);
+		case 1:
+		alert(a++);
+		case 2:
+		alert(a++);
+		case 3:
+		alert(a++);
+		case 4:
+		alert(a++);
+		case 5:
+		alert(a++);
+		case 6:
+		alert(a++);
+		case 7:
+		alert(a++);
+		case 8:
+		alert(a++);
+		case 9:
+		alert(a++);
+		case 10:
+		alert(a++);
+		case 11:
+		alert(a++);
+		case 12:
+		alert(a++);
+		case 13:
+		alert(a++);
+		case 14:
+		alert(a++);
+		case 15:
+		alert(a++);
+	}
+
+</script>		
+</body>
+</html>
