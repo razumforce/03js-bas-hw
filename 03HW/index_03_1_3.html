@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Howework02</title>
+</head>
+<body>
+
+<script type="text/javascript">
+	"use strict";
+	// homework #1 - простые от 0 до 100 включительно
+	console.log('Printing all prime numbers: [0..100]');
+    var isPrime;
+	for(var i = 2; i <= 100; i++) { // i = 1 - не простое по определение, начинаем с 2
+        isPrime = true;
+        for(var k = i - 1; k >= 2; k--) {
+            if(i % k === 0) {
+                isPrime = false;
+                break;
+            }
+        }
+
+        if(isPrime) {
+            console.log(i);
+        }  
+	}
+
+    
+	
+
+</script>		
+</body>
+</html>
