@@ -9,7 +9,7 @@
 <script type="text/javascript">
 	"use strict";
 	// homework #1 - простые от 0 до 100 включительно
-	console.log('Printing all prime numbers: [0..100]');
+	console.log('"Printing all prime numbers: [0..100]"');
     var isPrime;
 	for(var i = 2; i <= 100; i++) { // i = 1 - не простое по определение, начинаем с 2
         isPrime = true;
@@ -25,7 +25,17 @@
         }  
 	}
 
-    
+    // homework #2 - 0-10, ноль/чет/нечет
+    console.log('"Printing 0/even/odd: [0..10]"');
+    var i = 0;
+    console.log(i + ' - это ноль'); // первая строка (0) - нестандартный формат
+    for(i = 1; i <= 10; i++) {
+        if(i % 2 === 0) {
+            console.log(i + ' - четное число');
+        } else {
+            console.log(i + ' - нечетное число');
+        }
+    }
 	
 
 </script>		
