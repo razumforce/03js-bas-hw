@@ -26,16 +26,21 @@
 	}
 
     // homework #2 - 0-10, ноль/чет/нечет
-    console.log('"Printing 0/even/odd: [0..10]"');
-    var i = 0;
-    console.log(i + ' - это ноль'); // первая строка (0) - нестандартный формат
-    for(i = 1; i <= 10; i++) {
-        if(i % 2 === 0) {
-            console.log(i + ' - четное число');
-        } else {
-            console.log(i + ' - нечетное число');
+    function printNumbers(n) { // функция
+        var i = 0;
+        console.log(i + ' - это ноль'); // первая строка (0) - нестандартный формат
+        for(i = 1; i <= n; i++) {
+            if(i % 2 === 0) {
+                console.log(i + ' - четное число');
+            } else {
+                console.log(i + ' - нечетное число');
+            }
         }
     }
+
+    console.log('"Printing 0/even/odd: [0..10]"');
+    printNumbers(10); // тестовый вызов функции с a = 10
+    
 	
     // homework #3 - 0-9, не используя тело цикла for
     console.log('"Printing: [0..9] - without body of for loop"');
