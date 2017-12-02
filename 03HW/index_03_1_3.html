@@ -26,16 +26,18 @@
 	}
 
     // homework #2 - 0-10, ноль/чет/нечет
-    function printNumbers(n) { // функция
+    function printNumbers(n) { // функция на цикле do...while
         var i = 0;
-        console.log(i + ' - это ноль'); // первая строка (0) - нестандартный формат
-        for(i = 1; i <= n; i++) {
-            if(i % 2 === 0) {
+        do {
+            if(i === 0) {
+                console.log(i + ' - это ноль'); // первая строка (0) - нестандартный формат
+            } else if(i % 2 === 0) {
                 console.log(i + ' - четное число');
             } else {
                 console.log(i + ' - нечетное число');
             }
-        }
+            i++;
+        } while(i <= n);
     }
 
     console.log('"Printing 0/even/odd: [0..10]"');
