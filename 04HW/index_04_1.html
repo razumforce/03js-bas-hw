@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Howework04</title>
+</head>
+<body>
+
+<script type="text/javascript">
+  "use strict";
+  // task #1 - преобразовать 0-999 в объект
+  function parseNumber(number) {
+    var parsedNumber = {
+      'ones': 0,
+      'tens': 0,
+      'hundreds': 0,
+    };
+    
+    if (number > 999 || number < 0) {
+      return {};
+    }
+    parsedNumber['ones'] = number % 10;
+    number = (number - parsedNumber['ones']) / 10;
+    parsedNumber['tens'] = number % 10;
+    number = (number - parsedNumber['tens']) / 10;
+    parsedNumber['hundreds'] = number % 10;
+    return parsedNumber;
+  }
+
+
+  function getNumberInt() {
+    while (true) {
+      number = parseInt(prompt('Enter number from 0 to 999'));
+      if (isNaN(number) || typeof(number) != 'number') {
+        alert('Please enter number!')
+      } else {
+        return number;
+      }
+    }
+  }
+
+
+  var number = getNumberInt();
+  var parsedNumber = parseNumber(number);
+  if (Object.keys(parsedNumber).length === 0) {
+    console.log('Your number is not in range 0-999!');
+  } else {
+    console.log('Result of parsing number: ', number, ' is:');
+    console.log(parsedNumber);
+  }
+
+
+</script>		
+</body>
+</html>
