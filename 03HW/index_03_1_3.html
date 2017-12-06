@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Howework02</title>
+</head>
+<body>
+
+<script type="text/javascript">
+	"use strict";
+	// homework #1 - простые от 0 до 100 включительно
+	console.log('"Printing all prime numbers: [0..100]"');
+    var isPrime;
+	for(var i = 2; i <= 100; i++) { // i = 1 - не простое по определение, начинаем с 2
+        isPrime = true;
+        for(var k = i - 1; k >= 2; k--) {
+            if(i % k === 0) {
+                isPrime = false;
+                break;
+            }
+        }
+
+        if(isPrime) {
+            console.log(i);
+        }  
+	}
+
+    // homework #2 - 0-10, ноль/чет/нечет
+    function printNumbers(n) { // функция на цикле do...while
+        var i = 0;
+        do {
+            if(i === 0) {
+                console.log(i + ' - это ноль'); // первая строка (0) - нестандартный формат
+            } else if(i % 2 === 0) {
+                console.log(i + ' - четное число');
+            } else {
+                console.log(i + ' - нечетное число');
+            }
+            i++;
+        } while(i <= n);
+    }
+
+    console.log('"Printing 0/even/odd: [0..10]"');
+    printNumbers(10); // тестовый вызов функции с a = 10
+    
+	
+    // homework #3 - 0-9, не используя тело цикла for
+    console.log('"Printing: [0..9] - without body of for loop"');
+    for(var i = 0; i < 10; console.log(i++));
+    for(var i = 0; i < 10; console.log(i++)) {} // также работает - какой вариант лучше использовать?
+
+
+</script>		
+</body>
+</html>
