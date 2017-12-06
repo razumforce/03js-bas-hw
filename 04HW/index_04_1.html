@@ -9,7 +9,19 @@
 <script type="text/javascript">
   "use strict";
   // task #1 - преобразовать 0-999 в объект
+  var number = getNumberInt();
+  var parsedNumber = parseNumber(number);
+  if (Object.keys(parsedNumber).length === 0) {
+    console.log('Your number is not in range 0-999!');
+  } else {
+    console.log('Result of parsing number: ', number, ' is:');
+    console.log(parsedNumber);
+  }
+
+
+  // functions
   function parseNumber(number) {
+    // response format
     var parsedNumber = {
       'ones': 0,
       'tens': 0,
@@ -37,16 +49,6 @@
         return number;
       }
     }
-  }
-
-
-  var number = getNumberInt();
-  var parsedNumber = parseNumber(number);
-  if (Object.keys(parsedNumber).length === 0) {
-    console.log('Your number is not in range 0-999!');
-  } else {
-    console.log('Result of parsing number: ', number, ' is:');
-    console.log(parsedNumber);
   }
 
 
