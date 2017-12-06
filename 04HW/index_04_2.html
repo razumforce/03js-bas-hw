@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Howework04</title>
+</head>
+<body>
+
+<script type="text/javascript">
+  "use strict";
+  // task #2 - игра-квест
+  // 0 - good land, 1 - dead land, 2- prize
+  var GAME_MAP = [ [1, 1, 1, 1, 1],
+                   [1, 0, 0, 2, 1],
+                   [1, 0, 0, 1, 1],
+                   [1, 0, 0, 0, 1],
+                   [1, 1, 0, 0, 1] ];
+  
+  var turnNumber = 0;
+  var userPosition = {
+    'x': 2,
+    'y': 4,
+  };
+  var userInput;
+  var gamePlay = true;
+  var gameWin = false;
+
+  showGameGreeting(GAME_MAP);
+  
+  while (gamePlay) {
+    showGameStatus(userPosition, turnNumber);
+    showChoices();
+    userInput = getUserInput();
+
+    if (userInput === 'q' || userInput === 'Q') {
+      console.log('You gave up, very sorry, come back again!');
+      break;
+    } else {
+      moveUser(userInput, userPosition);
+    }
+
+    switch (GAME_MAP[userPosition['y']][userPosition['x']]) {
+      case 0:
+        console.log('All ok, you moved to good land!');
+        break;
+      case 1:
+        console.log('Oh, so sorry, you died at bad land... see you next time...');
+        gamePlay = false;
+        gameWin = false;
+        break;
+      case 2:
+        console.log('You did it!!! get your prize and teleport home!');
+        gamePlay = false;
+        gameWin = true;
+        break;
+    }
+
+    turnNumber++;
+  }
+  
+  if (gameWin) {
+    console.log('Welcome home, you are winner!');
+  } else {
+    console.log('Suggest to restart our game and keep trying, you, loser...');
+  }
+
+
+  // functions
+  function showGameGreeting(map) {
+    console.log('Welcome, you daring user!');
+    console.log('Move forward, left or right, trying to escape bad lands,');
+    console.log('and try to find a prize.');
+    console.log('If you find prize - you will get safely teleported to your home\n');
+    console.log('and here is map of our lands:\n');
+    for (var row in map) {
+      console.log(map[row]);
+    }
+    console.log('\n');
+    console.log('LET GAME START!\n');
+  }
+
+  function showGameStatus(pos, turn) {
+    console.log('Turn num: ', turn, '. You are at x = ', pos['x'], ', y = ', pos['y']);
+  }
+
+  function showChoices() {
+    console.log('Forward: w, Left: a, Right: d. GIVE UP: q');
+  }
+
+  function getUserInput() {
+    while (true) {
+      var move = prompt('Enter your command (or "q" for giving up):');
+      if (move ==='q' || move === 'a' || move === 'd' || move === 'w') {
+        return move;
+      }
+      alert('Wrong command, enter correct one!');
+    }
+  }
+
+  function moveUser(move, pos) { // насколько вообще рабочая практика прямо менять pos, не возвращая его???
+    switch (move) {
+      case 'w':
+        pos['y']--;
+        break;
+      case 'a':
+        pos['x']--;
+        break;
+      case 'd':
+        pos['x']++;
+        break;
+    }
+  }
+
+</script>		
+</body>
+</html>
