@@ -24,6 +24,7 @@
   var userInput;
   var gamePlay = true;
   var gameWin = false;
+  var turnHistory = [];
 
   showGameGreeting(GAME_MAP);
   
@@ -31,6 +32,8 @@
     showGameStatus(userPosition, turnNumber);
     showChoices();
     userInput = getUserInput();
+
+    turnHistory.push([Object.assign({}, userPosition), userInput]);
 
     if (userInput === 'q' || userInput === 'Q') {
       console.log('You gave up, very sorry, come back again!');
@@ -63,6 +66,16 @@
   } else {
     console.log('Suggest to restart our game and keep trying, you, loser...');
   }
+
+  console.log('Ваш полный список ходов:\n');
+  for (var item in turnHistory) {
+    showTurn(turnHistory, item, false);
+  }
+  
+  console.log('А теперь выберите ход, и увидите его в вертикальной распечатке:\n');
+  var userTurn = getUserInputRange(0, turnHistory.length-1);
+  showTurn(turnHistory, item, true);
+
 
 
   // functions
@@ -97,6 +110,20 @@
     }
   }
 
+  function getUserInputRange(start, end) {
+    var answer;
+    while (true) {
+      answer = parseInt(prompt('Введите номер хода, от '+start+' до '+end));
+      if (isNaN(answer) || typeof(answer) != 'number') {
+        alert('Введите число!')
+      } else if (answer >= start && answer <= end) {
+        return answer;
+      } else {
+        alert('Число должно быть от '+start+' до '+end);
+      }
+    }
+  }
+
   function moveUser(move, pos) { // насколько вообще рабочая практика прямо менять pos, не возвращая его???
     switch (move) {
       case 'w':
@@ -108,6 +135,16 @@
       case 'd':
         pos['x']++;
         break;
+    }
+  }
+
+  function showTurn(turnHistory, turn, vertical) {
+    if (vertical) {
+      console.log('Ход ', turn, '\nx=', turnHistory[turn][0]['x'], '\ny=', turnHistory[turn][0]['y'],
+                '\nВаша команда: ', turnHistory[turn][1]);
+    } else {
+    console.log('Ход ', turn, ', x=', turnHistory[turn][0]['x'], ', y=', turnHistory[turn][0]['y'],
+                'Ваша команда: ', turnHistory[turn][1]);
     }
   }
 
