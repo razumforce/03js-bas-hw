@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Howework04</title>
+</head>
+<body>
+
+<script type="text/javascript">
+  "use strict";
+  // task #3 - игра-"кто хочет стать миллионером"
+  var GAME_PRIZE = [1000, 5000, 50000]
+  var GAME_QUESTION = [ 
+    {
+      "question": "Какого цвета солнце?",
+      "a": "Белое",
+      "b": "Зеленое",
+      "c": "Желтое",
+      "d": "Красное",
+      "answer": "c",
+    },
+    {
+      "question": "Цвета флага России?",
+      "a": "Белый-Синий-Красный",
+      "b": "Красный",
+      "c": "Синий-Белый-Красный",
+      "d": "Зеленый-Белый",
+      "answer": "a",
+    },
+    {
+      "question": "Сколько будет 2+2?",
+      "a": "5",
+      "b": "3",
+      "c": "7",
+      "d": "4",
+      "answer": "d",
+    },
+  ]
+  var HINT_PLAY = 'Введите "y" для продолжения или "q" для прекращения игры:';
+  var OPTIONS_PLAY = ['y', 'q'];
+  var HINT_ANSWER = 'Введите ответ строчной латинской буквой:';
+  var OPTIONS_ANSWER = ['a', 'b', 'c', 'd'];
+  
+  var turnNumber = 0;
+  var userPrize = 0;
+  var userInput;
+  var gamePlay = true;
+
+  showGameGreeting(GAME_PRIZE);
+
+  while (gamePlay && turnNumber < GAME_PRIZE.length) {
+    showGameStatus(turnNumber, userPrize, GAME_PRIZE[turnNumber]);
+    userInput = getUserInput(HINT_PLAY, OPTIONS_PLAY);
+    if (userInput === 'q') {
+      console.log('Спасибо за игру!');
+      break;
+    }
+
+    showChoices(GAME_QUESTION[turnNumber], GAME_PRIZE[turnNumber]);
+    userInput = getUserInput(HINT_ANSWER, OPTIONS_ANSWER);
+
+    if (checkUserAnswer(userInput, GAME_QUESTION[turnNumber])) {
+      userPrize += GAME_PRIZE[turnNumber];
+      console.log('Ваш ответ: ', userInput, ' и ... ВЕРНО! Вы получаете ', GAME_PRIZE[turnNumber], ' и у Вас всего: ', userPrize);
+    } else {
+      userPrize = 0;
+      console.log('Ваш ответ: ', userInput, ' ОШИБКА... Весь Ваш выигрыш сгорел. Приходите еще!');
+      break;
+    }
+
+    turnNumber++;
+  }
+  
+  console.log('Игра окончена. Ваш выигрыш составил: ', userPrize);
+
+
+
+  // functions
+  function showGameGreeting(prize) {
+    console.log('Добро пожаловать в "Кто хочет стать миллионером"!');
+    console.log('Всего надо ответить на ', prize.length, ' вопрос(а)(ов).')
+    console.log('Ниже суммы призов, за правильные ответы:\n');
+    for (var item in prize) {
+      console.log('Вопрос номер ', +item+1, ' - приз: ', prize[item]);
+    }
+    console.log('\n');
+    console.log('ИГРА НАЧИНАЕТСЯ!\n');
+  }
+
+  function showGameStatus(turn, userPrize, prize) {
+    console.log('Вы прошли ', turn, ' этапов. Ваш общий выигрыш составляет ', userPrize);
+    console.log('Впереди вопрос номер: ', (turn+1), ' на ', prize);
+    console.log('Будете играть ("y") или прекращаете игру ("q")?\n');
+  }
+
+  function showChoices(question, prize) {
+    console.log('\nВопрос на ', prize, '\n');
+    console.log(question['question']);
+    console.log('Вариант "a": ', question['a']);
+    console.log('Вариант "b": ', question['b']);
+    console.log('Вариант "c": ', question['c']);
+    console.log('Вариант "d": ', question['d']);
+    console.log('Ваш ответ?');
+  }
+
+  function getUserInput(hint, answerOptions) {
+    while (true) {
+      var answer = prompt(hint);
+      for (var item in answerOptions) {
+        if (answer === answerOptions[item]) {
+          return answer;
+        }
+      }
+      alert('Нет такого варианта, пробуйте еще раз!');
+    }
+  }
+
+  function checkUserAnswer(userAnswer, question) {
+    if (userAnswer === question['answer']) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+</script>		
+</body>
+</html>
