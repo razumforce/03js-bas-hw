@@ -3,7 +3,7 @@ body {
   font-family: Arial;
 }
 
-#chess_table {
+#ch1 {
   width: 600px;
   height: 600px;
   display: flex;
@@ -48,6 +48,11 @@ body {
 }
 
 .noborder {
+  border-color: transparent;
+}
+
+.transparent {
+  background-color: transparent;
   border-color: transparent;
 }
 

@@ -17,63 +17,115 @@ var GAME = [['BC', 'BH', 'BE', 'BQ', 'BK', 'BE', 'BH', 'BC'],
             ['WC', 'WH', 'WE', 'WQ', 'WK', 'WE', 'WH', 'WC']];
 
 
-var chessTable1 = 'chess_table';
-displayChessTable(chessTable1);
+var chessTable1 = 'ch1';
+
+// сначала рендерим DOM-модель пустой доски и нумерации столбцов/рядов
+createChessTable(chessTable1);
+showColumns(chessTable1, COLUMNS, true, true); // показываем названия столбцов и сверху, и снизу
+showRows(chessTable1, ROWS, true, true); // показываем номера рядов и слева, и справа
+
+// а теперь показываем фигуры на всей доске
+showAllChessPieces(chessTable1, COLUMNS, ROWS, GAME, FIGURES);
 
 
 
-
-function displayChessTable(parentId) {
-  displayLabelsRow(parentId, 't', COLUMNS, "", "");
-  displayPlayField(parentId, GAME, ROWS, true, true);
-  displayLabelsRow(parentId, 'b', COLUMNS, "", "");
+// functions
+function createChessTable(parentId) {
+  createLabelsRow(parentId, 't', COLUMNS);
+  createPlayField(parentId, ROWS, COLUMNS);
+  createLabelsRow(parentId, 'b', COLUMNS);
 }
 
-function displayLabelsRow(parentId, row, labels, before_cell, after_cell) {
+function createLabelsRow(parentId, row, columns) {
   var parent = document.getElementById(parentId);
   var div = document.createElement('div');
+  div.id = parentId + row;
   div.className = 'columnlabel row';
   parent = parent.appendChild(div);
-  displayRow(parent, row, labels, 'noborder', before_cell, after_cell);
+  createRow(parent, row, columns, 'transparent');
 }
 
-function displayRow(parentId, row, content, main_cell, before_cell, after_cell) {
-  var div = document.createElement('div');
-  div.className = 'rowlabel cell noborder';
-  div.innerText = before_cell;
-  parentId.appendChild(div);
+function createPlayField(parentId, rows, columns) {
+  rows.reverse();
+  for (var i in rows) {
+    var parent = document.getElementById(parentId);
+    var div = document.createElement('div');
+    div.id = parentId + 'row' + rows[i];
+    div.className = 'row';
+    parent = parent.appendChild(div);
+    createRow(parent, rows[i], columns, (i % 2 === 0 ? 'white' : 'black'));
+  }
+}
 
-  for (var i in content) {
+function createRow(parent, row, columns, cell_background) {
+  var div = document.createElement('div');
+  div.id = parent.parentElement.id + '_row' + row + 'l';
+  div.className = 'rowlabel cell transparent';
+  parent.appendChild(div);
+
+  for (var i in columns) {
     div = document.createElement('div');
-    div.id = 'cell' + COLUMNS[i] + row;
-    div.className = 'cell ' + main_cell + ' ' + (content[i][1] === undefined ? '' : content[i][1]);
-    if (main_cell === 'black') {
-      main_cell = 'white';
-    } else if (main_cell === 'white') {
-      main_cell = 'black';
+    div.id = parent.parentElement.id + '_' + 'cell' + columns[i] + row;
+    div.className = 'cell ' + cell_background;
+    if (cell_background === 'black') {
+      cell_background = 'white';
+    } else if (cell_background === 'white') {
+      cell_background = 'black';
     }
-    div.innerHTML = content[i][0];
-    parentId.appendChild(div);
+    parent.appendChild(div);
   }
 
   div = document.createElement('div');
-  div.className = 'rowlabel cell noborder';
-  div.innerText = after_cell;
-  parentId.appendChild(div);
+  div.id = parent.parentElement.id + '_row' + row + 'r';
+  div.className = 'rowlabel cell transparent';
+  parent.appendChild(div);
 }
 
-function displayPlayField(parentId, field, rows, displayBefore, displayAfter) {
-  rows.reverse();
-  for (var i in field) {
-    var parent = document.getElementById(parentId);
-    var div = document.createElement('div');
-    div.id = 'row' + rows[i];
-    div.className = 'row';
-    parent = parent.appendChild(div);
-    var rowContent = [];
-    for (var j in field[i]) {
-      rowContent.push([FIGURES[field[i][j]], 'figure-' + field[i][j][0]]);
+function showColumns(parentId, columns, top_show, bottom_show) {
+  for (var i in columns) {
+    if (top_show) {
+      displayCellContent(parentId + '_cell' + columns[i] + 't', columns[i], 'figure-X');
     }
-    displayRow(parent, rows[i], rowContent, (i % 2 === 0 ? 'white' : 'black'), (displayBefore ? rows[i] : ''), (displayAfter ? rows[i] : ''));
+    if (bottom_show) {
+      displayCellContent(parentId + '_cell' + columns[i] + 'b', columns[i], 'figure-X');
+    }
   }
+}
+
+function showRows(parentId, rows, left_show, right_show) {
+  for (var i in rows) {
+    if (left_show) {
+      displayCellContent(parentId + '_row' + rows[i] + 'l', rows[i], 'figure-X');
+    }
+    if (right_show) {
+      displayCellContent(parentId + '_row' + rows[i] + 'r', rows[i], 'figure-X');
+    }
+  }
+}
+
+function showAllChessPieces(parentId, columns, rows, field, pieces_codes) {
+  for (var i in field) {
+    for (var j in field[i]) {
+      var showId = parentId + '_cell' + columns[j] + rows[i];
+      var showContent = '';
+      var showClass = '';
+      if (field[i][j] === 'XX') {
+        showContent = ''
+        showClass = 'figure-X';
+      } else if (field[i][j][0] === 'W') {
+        showContent = pieces_codes[field[i][j]];
+        showClass = 'figure-W';
+      } else if (field[i][j][0] === 'B') {
+        showContent = pieces_codes[field[i][j]];
+        showClass = 'figure-B';
+      }
+      displayCellContent(showId, showContent, showClass);
+    }
+  }
+}
+
+function displayCellContent(elementId, contentHTML, showClass) {
+  var elem = document.getElementById(elementId);
+  elem.classList.add(showClass);
+  elem.innerHTML = contentHTML;
 }
