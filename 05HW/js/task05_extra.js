@@ -4,172 +4,246 @@
   // игрок находится изначально на клетке 2,4 (нижний ряд, 3-й слева, на клетке 0)
   // цель - дойти до клетки с призом (2), двигаясь толко вперед, влево и вправо.
   
-  var GAME_MAP = [ [1, 1, 1, 1, 1],
-                   [1, 0, 0, 2, 1],
-                   [1, 0, 0, 1, 1],
-                   [1, 0, 0, 0, 1],
-                   [1, 1, 0, 0, 1] ];
-  
-  var turnNumber = 0;
+var COLUMNS = ['0', '1', '2', '3', '4'];
+var ROWS = ['0', '1', '2', '3', '4'];
+var FIGURES = {'1': '', '2': '', 
+               '0': ''};
+var COLORS = {'1': 'color1', '2': 'color2', '0': 'color0'};
 
-  var player = {
-    position: {
-      x: 2,
-      y: 4,
-    },
-    status: {
-      play: true,
-      win: false,
-    },
-    turnHistory: [],
+var GAME_MAP = [ ['1', '1', '1', '1', '1'],
+                 ['1', '0', '0', '2', '1'],
+                 ['1', '0', '0', '1', '1'],
+                 ['1', '0', '0', '0', '1'],
+                 ['1', '1', '0', '0', '1'] ];
 
-    turnsPlayed: function() {
-      return this.turnHistory.length;
-    },
+var turnNumber = 0;
 
-    addTurnHistory: function(command) {
-      this.turnHistory.push([Object.assign({}, this.position), command]);
-    },
+var player = {
+  position: {
+    x: 2,
+    y: 4,
+  },
+  status: {
+    play: true,
+    win: false,
+  },
+  turnHistory: [],
 
-    move: function(command) {
-      switch (command) {
-      case 'w':
-        this.position.y--;
-        break;
-      case 'a':
-        this.position.x--;
-        break;
-      case 'd':
-        this.position.x++;
-        break;
-      }
-    },
+  turnsPlayed: function() {
+    return this.turnHistory.length;
+  },
 
-    gameLose: function() {
-      this.status.play = false;
-      this.status.win = false;
-    },
+  addTurnHistory: function(command) {
+    this.turnHistory.push([Object.assign({}, this.position), command]);
+  },
 
-    gameWin: function() {
-      this.status.play = false;
-      this.status.win = true;
-    },
-
-    showTurnHistory: function(turn, vertical) { //turn = NaN show all turns,
-                                                // vertical = true show in vertical alignment
-      if (isNaN(turn)) {
-        for (var item in this.turnHistory) {
-          this.showOneTurn(item, vertical);
-        }
-      } else {
-        this.showOneTurn(turn, vertical);
-      }
-    },
-
-    showOneTurn: function(turn, vertical) { // вообще-то это желательно приватным методом сделать
-      if (vertical) {
-        console.log('Ход ', turn, '\nx=', this.turnHistory[turn][0]['x'],
-                    '\ny=', this.turnHistory[turn][0]['y'],
-                    '\nВаша команда: ', this.turnHistory[turn][1]);
-      } else {
-      console.log('Ход ', turn, ', x=', this.turnHistory[turn][0]['x'],
-                  ', y=', this.turnHistory[turn][0]['y'],
-                  'Ваша команда: ', this.turnHistory[turn][1]);
-      }
-    },
-  }
-
-  var userInput;
-  showGameGreeting(GAME_MAP);
-  
-  while (player.status.play) {
-    showGameStatus(player.position, turnNumber);
-    showChoices();
-    userInput = getUserInput();
-
-    player.addTurnHistory(userInput); // все же лучше отдельным методом вызывать, а не в move
-
-    if (userInput === 'q') {
-      console.log('You gave up, very sorry, come back again!');
+  move: function(command) {
+    switch (command) {
+    case 'w':
+      this.position.y--;
       break;
-    } else {
-      player.move(userInput);
+    case 'a':
+      this.position.x--;
+      break;
+    case 'd':
+      this.position.x++;
+      break;
     }
+  },
 
+  gameLose: function() {
+    document.getElementById('button_com').innerText = 'Смотреть историю ходов';
+    document.getElementById('command_text').style.display = 'none';
+    this.status.play = false;
+    this.status.win = false;
+  },
+
+  gameWin: function() {
+    document.getElementById('button_com').innerText = 'Смотреть историю ходов';
+    document.getElementById('command_text').style.display = 'none';
+    this.status.play = false;
+    this.status.win = true;
+  },
+
+  showTurnHistory: function() {
+    for (var item in this.turnHistory) {
+      this.showOneTurn(item);
+    }
+  },
+
+  showOneTurn: function(turn) { // вообще-то это желательно приватным методом сделать
+    var para = document.createElement('span');
+    para.innerText = 'Ход ' + turn + ', x=' + this.turnHistory[turn][0]['x'] +
+              ', y=' + this.turnHistory[turn][0]['y'] +
+              ' Ваша команда: ' + this.turnHistory[turn][1] +'\n';
+    var parent = document.getElementById('turns_history');
+    parent.appendChild(para);
+  },
+}
+
+// загрузка страницы
+var userInput;
+var gameId = 'game1';
+showGameMap(gameId, GAME_MAP);
+showGameStatus(gameId, player.position, turnNumber);
+// закончили грузить страницу
+
+// ****************************************************************************
+// главная функция - перехватывает нажатия на кнопку
+function getUserInput() {
+  if (player.status.play) {
+    var move = document.getElementById('command_text').value;
+    document.getElementById('command_text').value = '';
+    if (move === 'q' || move === 'a' || move === 'd' || move === 'w') {
+        makeMove(move);
+        turnNumber++;
+        showGameStatus(gameId, player.position, turnNumber);
+    } else {
+      alert('Неправильная команда, введите верную!');
+    }
+  } else {
+    displayGameResults();
+  }
+}
+// ****************************************************************************
+
+// all other functions
+function makeMove(userInput) {
+  player.addTurnHistory(userInput);
+  if (userInput === 'q') {
+    alert('Как жаль, что вы сдались...');
+    player.gameLose();
+    displayGameResults();
+  } else {
+    erasePlayerMark(gameId, player.position);
+    player.move(userInput);
     switch (GAME_MAP[player.position.y][player.position.x]) {
-      case 0:
-        console.log('All ok, you moved to good land!');
+      case '0':
+        alert('All ok, you moved to good land!');
         break;
-      case 1:
-        console.log('Oh, so sorry, you died at dead land... see you next time...');
+      case '1':
+        alert('Oh, so sorry, you died at dead land... see you next time...');
         player.gameLose();
         break;
-      case 2:
-        console.log('You did it!!! get your prize and teleport home!');
+      case '2':
+        alert('You did it!!! get your prize and teleport home!');
         player.gameWin();
         break;
     }
-
-    turnNumber++;
   }
-  
-  if (player.status.win) {
-    console.log('Welcome home, you are winner!');
-  } else {
-    console.log('Suggest to restart our game and keep trying, you, loser...');
+}
+
+function displayGameResults() {
+  var parent = document.getElementById('turns_history');
+  while (parent.lastChild) {
+    parent.removeChild(parent.lastChild)
+  }
+  var para = document.createElement('span');
+  para.innerText = 'Ваш полный список ходов:\n';
+  parent.appendChild(para);
+  player.showTurnHistory();
+}
+
+function showGameMap(parentId, map) {
+  createMapModel(parentId);
+  showColumns(parentId, COLUMNS, false, true); // показываем названия столбцов и сверху, и снизу
+  showRows(parentId, ROWS, true, false); // показываем номера рядов и слева, и справа
+  showAllCells(parentId, COLUMNS, ROWS, GAME_MAP, FIGURES, COLORS);
+}
+
+function createMapModel(parentId) {
+  createLabelsRow(parentId, 't', COLUMNS);
+  createPlayField(parentId, ROWS, COLUMNS);
+  createLabelsRow(parentId, 'b', COLUMNS);
+}
+
+function createLabelsRow(parentId, row, columns) {
+  var parent = document.getElementById(parentId);
+  var div = document.createElement('div');
+  div.id = parentId + row;
+  div.className = 'columnlabel row';
+  parent = parent.appendChild(div);
+  createRow(parent, row, columns, 'transparent');
+}
+
+function createPlayField(parentId, rows, columns) {
+  rows.reverse();
+  for (var i in rows) {
+    var parent = document.getElementById(parentId);
+    var div = document.createElement('div');
+    div.id = parentId + 'row' + rows[i];
+    div.className = 'row';
+    parent = parent.appendChild(div);
+    createRow(parent, rows[i], columns, '');
+  }
+}
+
+function createRow(parent, row, columns, cell_background) {
+  var div = document.createElement('div');
+  div.id = parent.parentElement.id + '_row' + row + 'l';
+  div.className = 'rowlabel cell transparent';
+  parent.appendChild(div);
+
+  for (var i in columns) {
+    div = document.createElement('div');
+    div.id = parent.parentElement.id + '_' + 'cell' + columns[i] + row;
+    div.className = 'cell ' + cell_background;
+    parent.appendChild(div);
   }
 
-  console.log('Ваш полный список ходов:\n');
-  player.showTurnHistory(NaN, false);
+  div = document.createElement('div');
+  div.id = parent.parentElement.id + '_row' + row + 'r';
+  div.className = 'rowlabel cell transparent';
+  parent.appendChild(div);
+}
 
-  console.log('А теперь выберите ход, и увидите его в вертикальной распечатке:\n');
-  var userTurn = getUserInputRange(0, player.turnsPlayed()-1);
-  player.showTurnHistory(userTurn, true);
-
-
-
-  // functions
-  function showGameGreeting(map) {
-    console.log('Welcome, you daring user!');
-    console.log('Move forward, left or right, trying to escape dead lands (0),');
-    console.log('and try to find a prize.');
-    console.log('If you find prize (2) - you will get safely teleported to your home\n');
-    console.log('and here is map of our lands:\n');
-    for (var row in map) {
-      console.log(map[row]);
+function showColumns(parentId, columns, top_show, bottom_show) {
+  for (var i in columns) {
+    if (top_show) {
+      displayCellContent(parentId + '_cell' + columns[i] + 't', columns[i], 'figure-X');
     }
-    console.log('\n');
-    console.log('LET GAME START!\n');
-  }
-
-  function showGameStatus(pos, turn) {
-    console.log('Turn num: ', turn, '. You are at x = ', pos.x, ', y = ', pos.y);
-  }
-
-  function showChoices() {
-    console.log('Forward: w, Left: a, Right: d. GIVE UP: q');
-  }
-
-  function getUserInput() {
-    while (true) {
-      var move = prompt('Enter your command (or "q" for giving up):');
-      if (move ==='q' || move === 'a' || move === 'd' || move === 'w') {
-        return move;
-      }
-      alert('Wrong command, enter correct one!');
+    if (bottom_show) {
+      displayCellContent(parentId + '_cell' + columns[i] + 'b', columns[i], 'figure-X');
     }
   }
+}
 
-  function getUserInputRange(start, end) {
-    var answer;
-    while (true) {
-      answer = parseInt(prompt('Введите номер хода, от '+start+' до '+end));
-      if (isNaN(answer) || typeof(answer) != 'number') {
-        alert('Введите число!')
-      } else if (answer >= start && answer <= end) {
-        return answer;
-      } else {
-        alert('Число должно быть от '+start+' до '+end);
-      }
+function showRows(parentId, rows, left_show, right_show) {
+  for (var i in rows) {
+    if (left_show) {
+      displayCellContent(parentId + '_row' + rows[i] + 'l', rows[i], 'figure-X');
+    }
+    if (right_show) {
+      displayCellContent(parentId + '_row' + rows[i] + 'r', rows[i], 'figure-X');
     }
   }
+}
+
+function showAllCells(parentId, columns, rows, field, pieces_codes, color_codes) {
+  for (var i in field) {
+    for (var j in field[i]) {
+      var showId = parentId + '_cell' + columns[j] + rows[i];
+      var showContent = pieces_codes[field[i][j]];
+      var showClass = color_codes[field[i][j]];
+      displayCellContent(showId, showContent, showClass);
+    }
+  }
+}
+
+function displayCellContent(elementId, contentHTML, showClass) {
+  var elem = document.getElementById(elementId);
+  if (showClass != '') elem.classList.add(showClass);
+  elem.innerHTML = contentHTML;
+}
+
+function showGameStatus(parentId, pos, turn) {
+  var elem = document.getElementById('turnnumber');
+  elem.innerHTML = turn;
+  var showId = parentId + '_cell' + COLUMNS[pos.x] + ROWS[pos.y];
+  displayCellContent(showId, 'X', '');
+}
+
+function erasePlayerMark(parentId, pos) {
+  var showId = parentId + '_cell' + COLUMNS[pos.x] + ROWS[pos.y];
+  displayCellContent(showId, '', '');
+}
