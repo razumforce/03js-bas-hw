@@ -1,0 +1,70 @@
+body {
+  /*box-sizing: border-box;*/
+  font-family: Arial;
+}
+
+#ch1 {
+  width: 600px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+}
+
+.row .rowlabel {
+  font-size: 16px;
+  color: green;
+}
+
+.columnlabel .cell {
+  font-size: 16px;
+  color: green;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.cell {
+  width: 50px;
+  height: 50px;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  text-align: center;
+  font-size: 40px;
+  line-height: 50px;
+}
+
+.white {
+  background-color: burlywood;
+}
+
+.black {
+  background-color: saddlebrown;
+}
+
+.noborder {
+  border-color: transparent;
+}
+
+.transparent {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.figure-W {
+  color: white;
+}
+
+.figure-B {
+  color: black;
+}
+
+.figure-X {
+  color: transparent;
+}
+

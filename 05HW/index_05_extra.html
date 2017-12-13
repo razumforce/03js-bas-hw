@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ДЗ05 - Доп задача - КВЕСТ</title>
+  <link rel="stylesheet" type="text/css" href="css/style05_extra.css">
+</head>
+<body>
+  <div class="wrapper">
+    <div id="greeting">
+      <p>Доброе пожаловать, смельчак!</p>
+      <p>
+        Перемещайся вперед, влево или вправо, стараясь не попадать на мертвые земли
+        и пытаясь дойти до сокровища.
+        Если найдешь сокровище - то будешь в целости и сохранности телепортирован домой.
+      </p>
+      <p>Ниже - карта наших земель</p>
+      <p>ДА НАЧНЕТСЯ ИГРА!</p>
+    </div>
+
+    <div id="game1">
+        
+    </div>
+
+    <div>Ход Номер - <span id="turnnumber"></span></div>
+    <div><p></p></div>
+    <div>Введите команду (Вперед: w, Налево: a, Направо: d. СДАТЬСЯ: q)</div>
+    
+    <input id="command_text" type="text">
+    <button id="button_com" type="submit" onclick=getUserInput()>Сделать ход</button>
+
+    <div><p></p></div>
+    <div id="turns_history"></div>
+  </div>
+
+  
+
+<script src="js/task05_extra.js">
+</script>		
+</body>
+</html>
