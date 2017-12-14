@@ -1,0 +1,37 @@
+body {
+  font-family: Arial;
+}
+
+.wrapper {
+  width: 800px;
+  margin: 0 auto;
+  background-color: beige;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#big_picture {
+  width: 700px;
+  height: 500px;
+  background-color: lightblue;
+  padding-top: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#gallery {
+  width: 700px;
+  height: 250px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-top: 20px;
+}
+
+#gallery > img {
+  cursor: pointer;
+}
