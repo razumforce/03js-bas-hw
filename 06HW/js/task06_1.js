@@ -4,7 +4,6 @@ var IMAGES = ['image1', 'image2', 'image3'];
 var CURRENT_IMG = 0;
 
 window.onload = init;
-var carousel = true;
 var interval = setInterval(pressRight, 3000);
 
 function init() {
