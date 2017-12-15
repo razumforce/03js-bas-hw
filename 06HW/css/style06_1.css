@@ -12,6 +12,21 @@ body {
   align-items: center;
 }
 
+.main {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrow > i {
+  display: block;
+}
+
+.arrow > i:hover {
+  cursor: pointer;
+}
+
 #big_picture {
   width: 700px;
   height: 500px;
@@ -33,6 +48,12 @@ body {
   padding-top: 20px;
 }
 
-#gallery > img {
+.gallery_item {
   cursor: pointer;
+  border-style: solid;
+  border-width: 3px;
+  border-color: transparent;
+}
+.selected {
+  border-color: #e94826;
 }
