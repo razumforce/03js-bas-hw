@@ -69,15 +69,37 @@ h2 {
 }
 
 .snake-unit {
-  background-color: chocolate;
+  background-image: url('../img/bitcoin.png');
 }
 
-.food-unit {
+.food-unit1 {
+  background-image: url('../img/food1.png');
   background-color: yellow;
 }
 
-.obstacle-unit {
-  background-color: grey;
+.food-unit2 {
+  background-image: url('../img/food2.png');
+  background-color: yellow;
+}
+
+.food-unit3 {
+  background-image: url('../img/food3.png');
+  background-color: yellow;
+}
+
+.obstacle-unit1 {
+  background-image: url('../img/obstacle-unit1.png');
+  background-color: white;
+}
+
+.obstacle-unit2 {
+  background-image: url('../img/obstacle-unit2.png');
+  background-color: white;
+}
+
+.obstacle-unit3 {
+  background-image: url('../img/obstacle-unit3.png');
+  background-color: white;
 }
 
 .buttons {

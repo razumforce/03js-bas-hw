@@ -5,6 +5,8 @@ window.onload = init;
 var FIELD_SIZE_X = 30;
 var FIELD_SIZE_Y = 20;
 var CELL_SIZE = 20;
+var FOOD_UNITS = 3;
+var OBSTACLE_UNITS = 3;
 
 // below var set in resetVariables()
 var gameSpeed;
@@ -18,8 +20,8 @@ var direction;
 var obstacles;
 var maxObstacles;
 var currentDifficulty;
-var gamePause;
-var modeGod;
+var gamePause; // spacebar
+var modeGod; // shift+ctrl+g
 
 // below vars set used as needed in various functions
 var snakeTimer;
@@ -121,8 +123,8 @@ function move() {
   if (checkGameLost(snakeHead)) {
     lostGameHandler();
   } else {
-    if (snakeHead.classList.contains('food-unit')) {
-      snakeHead.classList.replace('food-unit', 'snake-unit');
+    if (checkCell(snakeHead, 'food-unit')) {
+      replaceCellClass(snakeHead, 'food-unit', 'snake-unit');
       snake.unshift(snakeHead);
       score++;
       showScore();
@@ -137,6 +139,35 @@ function move() {
       snake.unshift(snakeHead);
       var snakeTale = snake.pop();
       snakeTale.classList.remove('snake-unit');
+    }
+  }
+}
+
+function checkCell(cell, classStart) {
+  var re = RegExp(classStart + '*');
+  for (var i = 0; i < cell.classList.length; i++) {
+    if (re.test(cell.classList[i])) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function replaceCellClass(cell, classStart, classToMake) {
+  var re = RegExp(classStart + '*');
+  for (var i = 0; i < cell.classList.length; i++) {
+    if (re.test(cell.classList[i])) {
+      cell.classList.remove(cell.classList[i]);
+      cell.classList.add(classToMake);
+    }
+  }
+}
+
+function removeCellClass(cell, classStart) {
+  var re = RegExp(classStart + '*');
+  for (var i = 0; i < cell.classList.length; i++) {
+    if (re.test(cell.classList[i])) {
+      cell.classList.remove(cell.classList[i]);
     }
   }
 }
@@ -222,19 +253,20 @@ function changeDirectionHandler(event) {
 function createFood() {
   do {
     var newFood = createItem(foodDistance);
-  } while (newFood.classList.contains('obstacle-unit'))
-  newFood.classList.add('food-unit');
+  } while (checkCell(newFood, 'obstacle-unit'))
+  var foodClass = 'food-unit' + Math.floor(Math.random() * FOOD_UNITS + 1);
+  newFood.classList.add(foodClass);
 }
 
 function createObstacle() {
   if (obstacles.length === maxObstacles) {
     var removedObstacle = obstacles.shift();
-    removedObstacle.classList.remove('obstacle-unit');
+    removeCellClass(removedObstacle, 'obstacle-unit');
   }
   do {
     var newObstacle = createItem(obstacleDistance);
-  } while (obstacles.includes(newObstacle))
-  newObstacle.classList.add('obstacle-unit');
+  } while (obstacles.includes(newObstacle) || checkCell(newObstacle, 'food-unit'))
+  newObstacle.classList.add('obstacle-unit' + Math.floor(Math.random() * OBSTACLE_UNITS + 1));
   obstacles.push(newObstacle);
 }
 
@@ -286,8 +318,5 @@ function updateDifficulty() {
     snakeTimer = setInterval(move, gameSpeed);
     maxObstacles += Math.floor(currentDifficulty / 10);
   }
-  console.log(currentDifficulty);
-  console.log(gameSpeed);
-  console.log(maxObstacles);
 }
 
