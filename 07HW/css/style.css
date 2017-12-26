@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=cyrillic');
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'PT Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+h2 {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.title-god {
+  color: white;
+}
+
+.ROOT {
+  width: 80%;
+  min-width: 600px;
+  min-height: 600px;
+  height: 100vh;
+  margin: 0 auto;
+  background-color: #008594;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#snake-field {
+  margin: 10px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ccc;
+}
+
+#snake-score span:first-child {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+#snake-score span:last-child {
+  font-size: 26px;
+  font-weight: 400;
+}
+
+#snake-win span:first-child {
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+}
+
+#snake-win span:last-child {
+  font-size: 20px;
+  font-weight: 400;
+  color: white;
+}
+
+.field-cell {
+  background-color: green;
+  width: 20px;
+  height: 20px;
+}
+
+.snake-unit {
+  background-image: url('../img/bitcoin.png');
+}
+
+.food-unit1 {
+  background-image: url('../img/food1.png');
+  background-color: yellow;
+}
+
+.food-unit2 {
+  background-image: url('../img/food2.png');
+  background-color: yellow;
+}
+
+.food-unit3 {
+  background-image: url('../img/food3.png');
+  background-color: yellow;
+}
+
+.obstacle-unit1 {
+  background-image: url('../img/obstacle-unit1.png');
+  background-color: white;
+}
+
+.obstacle-unit2 {
+  background-image: url('../img/obstacle-unit2.png');
+  background-color: white;
+}
+
+.obstacle-unit3 {
+  background-image: url('../img/obstacle-unit3.png');
+  background-color: white;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.buttons > button {
+  height: 40px;
+  padding-left: 50px;
+  padding-right: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  background-color: #ccc;
+  cursor: pointer;
+  outline: none;
+}
